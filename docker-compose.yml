@@ -1,0 +1,7 @@
+services:
+  learnpyapp:
+    build: .
+    working_dir: /learnpyapp
+    volumes:
+      - ./:/learnpyapp
+    command: python -m learnpyapp
