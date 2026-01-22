@@ -4,4 +4,6 @@ services:
     working_dir: /learnpyapp
     volumes:
       - ./:/learnpyapp
-    command: python -m learnpyapp
+    ports:
+      - "8000:8000"
+    command: uvicorn learnpyapp.api:app --host 0.0.0.0 --port 8000
