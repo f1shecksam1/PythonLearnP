@@ -1,7 +1,10 @@
 # tests/test_health.py
 # 💓 Uygulamanın sağlık kontrolü (health endpoint) testleri
 
-def test_health_endpoint(client):
+from fastapi.testclient import TestClient
+
+
+def test_health_endpoint(client: TestClient) -> None:
     """
     ✅ /api/v1/health endpoint’inin doğru çalıştığını doğrular.
     """
