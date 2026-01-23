@@ -20,6 +20,12 @@ package-dir = {"" = "src"}  # Kod src klasöründe
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[project.optional-dependencies]
+test = [
+  "pytest",
+  "httpx",
+]
+
 # -------------------------------
 # Kod Kalitesi Araçları
 # -------------------------------
