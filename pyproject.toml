@@ -1,52 +1,128 @@
-# 🧩 Python proje yapılandırması (setuptools, bağımlılıklar, kalite araçları)
+# pyproject.toml
+# 🧠 Bu dosya, Python projesinin yapılandırma merkezidir.
+# - Paket bilgileri (isim, sürüm, bağımlılıklar)
+# - Build sistemi (setuptools, poetry, pdm vs.)
+# - Kod kalite araçları (ruff, black, mypy)
+# - Test bağımlılıkları
+# - Tip kontrolü, biçimlendirme ve lint ayarları
 
+# -------------------------------------------------------------
+# ⚙️ BUILD SYSTEM (Paketin nasıl oluşturulacağını belirtir)
+# -------------------------------------------------------------
 [build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools>=68", "wheel"]  
+# 📦 'setuptools' → Python paketleme aracı
+# 📦 'wheel' → .whl formatında paket üretmek için
+# Bu ikisi olmadan "pip install -e ." gibi komutlar çalışmaz.
 
+build-backend = "setuptools.build_meta"
+# 🧩 Python, projeyi build ederken bu backend'i kullanır.
+# Bu, setuptools’un modern (PEP 517 uyumlu) sürümüdür.
+
+# -------------------------------------------------------------
+# 🧱 PROJECT METADATA (Projenin temel bilgileri)
+# -------------------------------------------------------------
 [project]
-name = "learnpyapp"
-version = "0.1.0"
-requires-python = ">=3.10"
+name = "learnpyapp"         # 📛 Paket adı
+version = "0.1.0"           # 🔢 Sürüm numarası
+requires-python = ">=3.10"  # 🐍 Minimum Python sürümü
+
+# 🧩 Ana bağımlılıklar (app'in çalışması için gerekenler)
 dependencies = [
-  "fastapi",
-  "uvicorn[standard]",
-  "pydantic-settings",
+  "fastapi",                # 🌐 Web framework
+  "uvicorn[standard]",      # ⚡ ASGI server (FastAPI'yi çalıştırır)
+  "pydantic-settings",      # ⚙️ Ortam değişkenlerinden ayar okuma
 ]
 
-[tool.setuptools]
-package-dir = {"" = "src"}  # Kod src klasöründe
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
+# -------------------------------------------------------------
+# 📦 OPTIONAL DEPENDENCIES (isteğe bağlı yüklenebilen bağımlılıklar)
+# -------------------------------------------------------------
 [project.optional-dependencies]
 test = [
-  "pytest",
-  "httpx",
+  "pytest",   # 🧪 Test framework
+  "httpx",    # 🌐 FastAPI TestClient için gerekli
 ]
+# 💡 Bu grup, test ortamını kurmak için kullanılır.
+# Komut:
+#   pip install -e .[test]
+# Yukarıdaki komut, hem uygulamayı hem de test bağımlılıklarını kurar.
 
-# -------------------------------
-# Kod Kalitesi Araçları
-# -------------------------------
+# -------------------------------------------------------------
+# 🧩 SETUPTOOLS AYARLARI (kaynak kodunun yeri)
+# -------------------------------------------------------------
+[tool.setuptools]
+package-dir = {"" = "src"}  
+# 📂 Kodun 'src/' klasöründe bulunduğunu belirtir.
+# Bu yapı, modül karmaşasını azaltır (örnek: yanlış import’lar).
 
+[tool.setuptools.packages.find]
+where = ["src"]  
+# 🔍 setuptools’a “paketleri src klasöründe ara” der.
+
+# -------------------------------------------------------------
+# 🧰 RUFF (linting + import düzenleme aracı)
+# -------------------------------------------------------------
 [tool.ruff]
-line-length = 88
-target-version = "py310"
+line-length = 88           # 📏 Maksimum satır uzunluğu
+target-version = "py310"   # 🎯 Python sürüm hedefi (3.10)
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "ANN"]
-ignore = ["E501"]  # Satır uzunluğu uyarılarını yok say
+# 🔍 Lint kuralları:
+# - E, F, W → Temel PEP8 + hata kuralları
+# - I → import düzenleme (isort benzeri)
+# - ANN → type annotation (tip denetimi) kuralları
 
+ignore = ["E501"]
+# 🚫 E501 = uzun satır uyarılarını yok say
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-first-party = ["learnpyapp"]
+# ⚙️ Import sıralaması:
+# - 'learnpyapp' kendi modüllerimiz olarak sayılır
+# - Diğerleri (stdlib, third-party) ayrı gruplandırılır
+
+# -------------------------------------------------------------
+# ⚫ BLACK (otomatik kod biçimlendirme aracı)
+# -------------------------------------------------------------
 [tool.black]
 line-length = 88
 target-version = ["py310"]
+# ⚙️ Kod biçimlendirmeyi standart hale getirir.
+# Komut:
+#   black .
+# (Tüm dosyaları biçimlendirir)
 
+# -------------------------------------------------------------
+# 🔍 MYPY (tip kontrol aracı)
+# -------------------------------------------------------------
 [tool.mypy]
-python_version = "3.10"
-disallow_untyped_defs = true
-check_untyped_defs = true
-warn_return_any = true
-ignore_missing_imports = true
-strict_equality = true
-no_implicit_optional = true
+python_version = "3.10"                # 🎯 Python sürümü
+disallow_untyped_defs = true           # ❌ Tip belirtilmeyen fonksiyonlara izin verme
+disallow_incomplete_defs = true        # ❌ Eksik tip açıklamalarına izin verme
+check_untyped_defs = true              # ✅ Tipi olmayan fonksiyonları da kontrol et
+warn_return_any = true                 # ⚠️ "Any" dönüş tipi uyarısı
+warn_unused_ignores = true             # ⚠️ Gereksiz # type: ignore uyarısı
+warn_redundant_casts = true            # ⚠️ Gereksiz cast işlemlerini bildir
+warn_unused_configs = true             # ⚠️ Kullanılmayan ayarları bildir
+ignore_missing_imports = true          # 🔕 Tip stub olmayan modülleri yok say
+strict_equality = true                 # 🧩 == yerine __eq__ uyum kontrolü
+no_implicit_optional = true            # ✅ Optional tipleri açıkça belirt (örnek: Optional[str])
+
+# 💡 Tip kontrol komutu:
+#   mypy src/
+# 💡 Tip ihlali varsa hata olarak döner.
+
+# -------------------------------------------------------------
+# 🧪 TEST KOMUTLARI
+# -------------------------------------------------------------
+# Testleri çalıştırmak için:
+#   pytest -q
+# veya
+#   python -m pytest
+# Eğer test bağımlılıkları yoksa:
+#   pip install -e .[test]
+# Ardından:
+#   pytest -v
+# -------------------------------------------------------------
