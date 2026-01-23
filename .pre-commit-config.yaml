@@ -1,0 +1,35 @@
+# .pre-commit-config.yaml
+# 🧰 Kod kalitesini commit öncesinde otomatik denetlemek için pre-commit yapılandırması
+# Araçlar: Black, Ruff, Mypy
+
+repos:
+  # -------------------------------
+  # ⚫ BLACK (otomatik kod biçimlendirme)
+  # -------------------------------
+  - repo: https://github.com/psf/black
+    rev: 24.1.1  # (en son stabil sürüm)
+    hooks:
+      - id: black
+        language_version: python3.10
+        args: [--check]  # sadece kontrol et, otomatik düzeltme yok
+        stages: [commit]  # commit öncesinde çalıştırılır
+
+  # -------------------------------
+  # 🪶 RUFF (lint ve import düzenleme)
+  # -------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.2.0
+    hooks:
+      - id: ruff
+        args: [--fix]  # hataları otomatik düzeltir
+        stages: [commit]
+
+  # -------------------------------
+  # 🔍 MYPY (tip kontrol aracı)
+  # -------------------------------
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [pydantic, fastapi]
+        stages: [commit]
