@@ -1,17 +1,18 @@
 {
+  // VSCode’da görünmesini istemediğimiz dosya ve klasörler
   "files.exclude": {
-    "**/__pycache__": true,
-    "**/.mypy_cache": true,
-    "**/.ruff_cache": true,
-    "**/.pytest_cache": true,
-    "**/.venv": true,
+    "**/__pycache__": true,    // Python derleme cache klasörleri
+    "**/.mypy_cache": true,    // Mypy tip kontrol cache
+    "**/.ruff_cache": true,    // Ruff lint cache
+    "**/.pytest_cache": true,  // Pytest sonuç cache
+    "**/.venv": true,          // Sanal ortam klasörü
     "**/env": true,
     "**/venv": true,
-    "**/build": true,
-    "**/dist": true,
-    "**/*.egg-info": true,
+    "**/build": true,          // Derleme çıktıları
+    "**/dist": true,           // Dağıtım klasörü
+    "**/*.egg-info": true,     // Paket meta bilgileri
     "**/.pdm-build": true,
     "**/.pdm-python": true,
-    "**/.pdm.toml": true
+    "**/.pdm.toml": true       // PDM yapılandırma dosyaları
   }
 }

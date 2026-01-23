@@ -1,4 +1,4 @@
-# pyproject.toml
+# 🧩 Python proje yapılandırması (setuptools, bağımlılıklar, kalite araçları)
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
@@ -15,13 +15,13 @@ dependencies = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir = {"" = "src"}  # Kod src klasöründe
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 # -------------------------------
-# 🧰 Code Quality Tools
+# Kod Kalitesi Araçları
 # -------------------------------
 
 [tool.ruff]
@@ -30,35 +30,17 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "ANN"]
-ignore = ["E501"]
+ignore = ["E501"]  # Satır uzunluğu uyarılarını yok say
 
-[tool.ruff.lint.isort]
-combine-as-imports = true
-known-first-party = ["learnpyapp"]
-
-# ⚫ Black - Kod biçimlendirme
 [tool.black]
 line-length = 88
 target-version = ["py310"]
 
-# 🧩 Mypy - Tip denetimi
 [tool.mypy]
 python_version = "3.10"
-
-# 🔒 Type Hint zorunluluğu
 disallow_untyped_defs = true
-disallow_incomplete_defs = true
 check_untyped_defs = true
-
-# 🚫 Riskli davranışlara karşı uyarılar
 warn_return_any = true
-warn_unused_ignores = true
-warn_redundant_casts = true
-warn_unused_configs = true
-
-# 🧩 Eksik import stub’larını hata olarak sayma
 ignore_missing_imports = true
-
-# 🧱 Type inference geliştirmeleri
 strict_equality = true
 no_implicit_optional = true
