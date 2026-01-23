@@ -1,9 +1,39 @@
-services:
-  learnpyapp:
-    build: .
-    working_dir: /learnpyapp
-    volumes:
-      - ./:/learnpyapp
-    ports:
-      - "8000:8000"
-    command: uvicorn learnpyapp.main:app --host 0.0.0.0 --port 8000
+# .github/workflows/ci.yml
+name: CI - Code Quality & Tests
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧱 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install black ruff mypy pytest
+
+      - name: ⚫ Run Black (format check)
+        run: black --check .
+
+      - name: 🪶 Run Ruff (lint check)
+        run: ruff check .
+
+      - name: 🔍 Run Mypy (type check)
+        run: mypy src/
+
+      - name: 🧪 Run Pytest (unit tests)
+        run: pytest -q

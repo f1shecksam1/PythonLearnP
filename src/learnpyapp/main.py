@@ -3,10 +3,10 @@ import logging
 
 from fastapi import FastAPI
 
+from learnpyapp.api.v1.router import api_router as v1_router
 from learnpyapp.core.config import settings
 from learnpyapp.core.logging import configure_logging
 from learnpyapp.middlewares.request_id import RequestIdMiddleware
-from learnpyapp.api.v1.router import api_router as v1_router
 
 
 def create_app() -> FastAPI:
