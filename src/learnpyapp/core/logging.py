@@ -59,6 +59,15 @@ def configure_logging(level: str = "INFO", log_dir: str = "logs") -> None:
     root.addHandler(console_handler)
     root.addHandler(file_handler)
 
+    # --- Uvicorn loglarını da root'a bağla ---
+    for name in ["uvicorn", "uvicorn.error", "uvicorn.access"]:
+        uvicorn_logger = logging.getLogger(name)
+        uvicorn_logger.handlers = []  # kendi handler’larını temizle
+        uvicorn_logger.propagate = True  # root’a ilet
+        uvicorn_logger.setLevel(level.upper())
+
+    logging.getLogger(__name__).info("Logging configured → %s", log_path)
+
     # Uvicorn logları da aynı seviyeye çek
     logging.getLogger("uvicorn").setLevel(level.upper())
     logging.getLogger("uvicorn.error").setLevel(level.upper())

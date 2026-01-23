@@ -24,15 +24,15 @@ where = ["src"]
 # 🧰 Code Quality Tools
 # -------------------------------
 
-# 🪶 Ruff - Linting & Import düzenleme
 [tool.ruff]
-select = ["E", "F", "W", "I", "ANN"]
-ignore = ["E501"]
 line-length = 88
 target-version = "py310"
 
-# Ekstra: import sıralamasını düzenler
-[tool.ruff.isort]
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "ANN"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
 combine-as-imports = true
 known-first-party = ["learnpyapp"]
 

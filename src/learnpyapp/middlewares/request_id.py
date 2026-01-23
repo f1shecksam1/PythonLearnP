@@ -1,6 +1,7 @@
 # src/learnpyapp/middlewares/request_id.py
 from __future__ import annotations
 
+import logging  # ✅ EKLENDİ
 from typing import Any, Awaitable, Callable, MutableMapping
 
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -18,6 +19,9 @@ ASGIApp = Callable[
     ],
     Awaitable[None],
 ]
+
+# ✅ Global logger oluşturduk
+logger = logging.getLogger("learnpyapp.request")
 
 
 class RequestIdMiddleware(BaseHTTPMiddleware):
@@ -37,6 +41,19 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
         rid = request.headers.get(self.header_name) or new_request_id()
         set_request_id(rid)
 
+        # ✅ İstek öncesi log
+        logger.info("➡️  %s %s [rid=%s]", request.method, request.url.path, rid)
+
         response = await call_next(request)
+
+        # ✅ İstek sonrası log
+        logger.info(
+            "⬅️  %s %s %s [rid=%s]",
+            request.method,
+            request.url.path,
+            response.status_code,
+            rid,
+        )
+
         response.headers[self.header_name] = rid
         return response
