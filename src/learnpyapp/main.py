@@ -14,7 +14,7 @@ from learnpyapp.core.config import (
     settings,  # Ortam değişkenlerinden gelen ayarları okur.
 )
 from learnpyapp.core.logging import configure_logging  # Loglama sistemini yapılandırır.
-from learnpyapp.middlewares.request_id import (
+from learnpyapp.middlewares.request_id_middleware import (
     RequestIdMiddleware,  # Request-id ekleyen middleware.
 )
 
