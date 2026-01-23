@@ -30,7 +30,9 @@ def create_app() -> FastAPI:
 
     # Ana logger nesnesini al (bu dosyadaki işlemleri loglayacağız)
     logger = logging.getLogger(__name__)
-    logger.info("Starting app: env=%s", settings.app_env)  # Ortam bilgisini logla (örneğin: dev veya prod)
+    logger.info(
+        "Starting app: env=%s", settings.app_env
+    )  # Ortam bilgisini logla (örneğin: dev veya prod)
 
     # FastAPI uygulamasını oluştur (başlık bilgisiyle)
     app = FastAPI(title=settings.app_name)

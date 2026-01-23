@@ -17,10 +17,11 @@ from learnpyapp.core.request_id import (
 
 
 class RequestIdFilter(logging.Filter):
-    """🔗 Her log kaydına request-id ekleyen özel filter sınıfı."""
+    """Her log kaydına request-id ekler."""
 
-    def filter(self, record: logging.LogRecord) -> bool:
-        # Log kaydına request-id alanı ekler
+    def filter(
+        self: logging.Filter, record: logging.LogRecord
+    ) -> bool:  # 👈 self tipi eklendi
         record.request_id = get_request_id()
         return True
 
