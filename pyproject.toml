@@ -32,6 +32,8 @@ dependencies = [
   "fastapi",                # 🌐 Web framework
   "uvicorn[standard]",      # ⚡ ASGI server (FastAPI'yi çalıştırır)
   "pydantic-settings",      # ⚙️ Ortam değişkenlerinden ayar okuma
+  "python-jose[cryptography]",   # 🔐 JWT
+  "passlib[bcrypt]",             # 🔑 Password hashing
 ]
 
 # -------------------------------------------------------------
