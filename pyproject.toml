@@ -35,6 +35,8 @@ dependencies = [
   "python-jose[cryptography]",   # 🔐 JWT
   "passlib[bcrypt]",             # 🔑 Password hashing
   "bcrypt<4.0",
+  "sqlmodel",
+  "psycopg2-binary",
 ]
 
 # -------------------------------------------------------------
