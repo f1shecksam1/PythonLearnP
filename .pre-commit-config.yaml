@@ -12,7 +12,7 @@ repos:
       - id: black
         language_version: python3.10
         args: [--check]  # sadece kontrol et, otomatik düzeltme yok
-        stages: [commit]  # commit öncesinde çalıştırılır
+        stages: [pre-commit]  # commit öncesinde çalıştırılır
 
   # -------------------------------
   # 🪶 RUFF (lint ve import düzenleme)
@@ -22,7 +22,7 @@ repos:
     hooks:
       - id: ruff
         args: [--fix]  # hataları otomatik düzeltir
-        stages: [commit]
+        stages: [pre-commit]
 
   # -------------------------------
   # 🔍 MYPY (tip kontrol aracı)
@@ -31,5 +31,5 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        additional_dependencies: [pydantic, fastapi]
-        stages: [commit]
+        additional_dependencies: [pydantic, fastapi, sqlmodel]
+        stages: [pre-commit]
